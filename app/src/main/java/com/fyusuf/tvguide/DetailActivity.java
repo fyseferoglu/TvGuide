@@ -94,6 +94,8 @@ public class DetailActivity extends AppCompatActivity {
                 Program program = program_list.get(position);
                 Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
                 intent.putExtra("programName", program.getName());
+                intent.putExtra("programTime",program.getTime());
+                intent.putExtra("programChannel",program.getChannel());
                 intent.putExtra("programImg", program.getLogo());
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), program.getName().hashCode(), intent, 0);
                 Log.i("hashcode", String.valueOf(program.getName().hashCode()));

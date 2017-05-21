@@ -20,8 +20,8 @@
 
             <ImageView
                 android:id="@+id/kanal_logo"
-                android:layout_width="150px"
-                android:layout_height="150px"
+                android:layout_width="200px"
+                android:layout_height="200px"
                 android:src="@drawable/star_tv"
                 android:contentDescription="Logo"
                 android:layout_gravity="center"

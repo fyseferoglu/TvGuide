@@ -37,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
         ringtone.play();*/
-        SharedPreferences sharedPreferences = context.getSharedPreferences("SelectFile", context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SelectFile", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = sharedPreferences.getString("program", null);

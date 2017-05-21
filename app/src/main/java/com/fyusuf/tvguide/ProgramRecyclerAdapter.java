@@ -63,7 +63,7 @@ public class ProgramRecyclerAdapter extends RecyclerView.Adapter<ProgramRecycler
         holder.kanal_logo.setImageBitmap(list_program.get(position).getLogo());
         //holder.star.setImageResource(android.R.drawable.btn_star_big_off);
         //holder.star.setTag("grey");
-        if (check(program.getName())) {
+        if (check(program.getChannel()+program.getTime()+program.getName())) {
             holder.star.setImageResource(android.R.drawable.btn_star_big_on);
             holder.star.setTag("red");
         } else {

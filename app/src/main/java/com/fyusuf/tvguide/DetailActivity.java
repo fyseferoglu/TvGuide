@@ -118,11 +118,11 @@ public class DetailActivity extends AppCompatActivity {
                 if (programTime > currentTime) {
                     if (starView.getTag().equals("grey")) {
                         Toast.makeText(getApplicationContext(), program.getName() + " is selected!", Toast.LENGTH_SHORT).show();
-                        sp_list.add(program.getName());
+                        sp_list.add(program.getChannel()+program.getTime()+program.getName());
                         Log.i("size",String.valueOf(sp_list.size()));
                         String json = gson.toJson(sp_list);
                         editor.putString("program", json);
-                        editor.commit();
+                        editor.apply();
                         starView.setImageResource(android.R.drawable.btn_star_big_on);
                         starView.setTag("yellow");
                         adapter_items.notifyItemChanged(position);
@@ -132,11 +132,11 @@ public class DetailActivity extends AppCompatActivity {
                         calendar.set(Calendar.MILLISECOND, 0);
                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                     } else {
-                        sp_list.remove(program.getName());
+                        sp_list.remove(program.getChannel()+program.getTime()+program.getName());
                         Log.i("size", String.valueOf(sp_list.size()));
                         String json = gson.toJson(sp_list);
                         editor.putString("program", json);
-                        editor.commit();
+                        editor.apply();
                         starView.setTag("grey");
                         starView.setImageResource(android.R.drawable.btn_star_big_off);
                         adapter_items.notifyItemChanged(position);
@@ -152,6 +152,8 @@ public class DetailActivity extends AppCompatActivity {
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Bu program seçilemez...", Toast.LENGTH_SHORT).show();
+                    editor.clear();
+                    editor.commit();
                 }
 
             }
@@ -184,11 +186,12 @@ public class DetailActivity extends AppCompatActivity {
                 String time = sdf.format(cal.getTime());
                 Document doc  = Jsoup.connect(URL).get();
                 Elements programName = doc.select("div.row div[class=ten columns]");
+                Element programChannel = doc.select("div.row h1").first();
                 Elements programTime = doc.select("div.row div[class=two columns time]");
                 for(int i = 0; i < programName.size(); i++){
                     String[] token = programTime.get(i).attr("title").split(" ");
                     if(token[0].equals(time))
-                        program_list.add(new Program(programName.get(i).text(),programTime.get(i).text(),bitmapKanalLogo));
+                        program_list.add(new Program(programName.get(i).text(),programChannel.text(),programTime.get(i).text(),bitmapKanalLogo));
                 }
 
             }catch (Exception e){

@@ -43,8 +43,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         String json = sharedPreferences.getString("program", null);
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
         ArrayList<String> arrayList = gson.fromJson(json, type);
+        String str = intent.getStringExtra("programChannel")+intent.getStringExtra("programTime")+intent.getStringExtra("programName");
         if(arrayList !=null) {
-           arrayList.remove(intent.getStringExtra("programName"));
+           arrayList.remove(str);
         }
         json = gson.toJson(arrayList);
         editor.putString("program", json);
@@ -66,6 +67,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Add as notification
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
+        manager.notify(intent.getStringExtra("programName").hashCode(), builder.build());
     }
 }
